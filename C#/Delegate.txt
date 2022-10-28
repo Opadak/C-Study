@@ -1,0 +1,46 @@
+델리게이트는 메소드에 대한 참조이다. 
+자신이 참조할 메소드의 반환 형식과 매개변수를 명시해줘야 한다. 
+
+delegrate int MyDelegrate (int a, int b);
+
+델리게이트는 인스턴스가 아닌 형식이다. 
+"메소드를 참조하는 무엇"을 만들려면 MyDelegrate를 인스턴스를 따로 만들어 줘야 한다. 
+
+int plus (int a, int b)
+{
+ return a + b;
+}
+
+int Minus (int a, int b)
+{
+ return a - b ;
+}
+
+이 두 메소드의 형식이 MyDelegrate와 똑같다. 
+
+MyDelegrate callback; // 호출자
+
+callback = new MyDelegrate(Plus);
+console.WriteLine(Callback(3,4));
+
+callback = new MyDelegrate(Minus);
+console.WriteLine(Callback(7,5));
+
+델레그레이트 생성자의 매개변수로 두 메소드가 들어감. 
+이 말은 둘을 참조했다는 의미.. 
+
+이때 CallBack을 메소드 호출하듯 호출하면, CallBack 은 현재 자신이 참조하고 있는 주소에 있는 메소드의 코드를 실행 할 것이다.
+(추상클래스도 호출 가능) 
+그리고 실행결과를 호출자에게 줄 것이다. 
+
+델리게이트가 콜벡을 구현하는 과정
+
+1. 델리게이트를 선언한다. 
+2. 델리게이트의 인스턴스를 생성한다. 인스턴스를 생성 할 때는 델리게이트가 참조할 메소드를 매개 변수로 넘긴다. 
+3. 델리게이트를 호출한다. 
+
+
+메소드 <- 델리게이트 <- 호출자 
+
+
+

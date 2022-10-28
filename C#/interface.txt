@@ -1,0 +1,30 @@
+class ClimateMonitor{
+
+	private ILogger logger;
+	public ClimateMonitor(ILogger logger)
+	{
+
+		this.logger = loggerl
+	]
+
+}
+
+var monitor = new ClimateMonitor(new FileLogger("log.txt"));
+
+class FileLogger:ILogger
+{
+
+	private StreamWriter writer;
+	public FileLogger (string path)
+	{
+
+	writer = File.CreateText(Path);
+	writer.AutoFlush = true;
+
+
+	}
+
+	pubilc void Writelog(string message){
+		writer.WriteLine (message);
+	}
+}

@@ -1,0 +1,33 @@
+class 와 instance
+
+오브젝트는 인스턴스를 아우르는 것. 오브젝트는 인스턴스가 될 수 있지만 인스턴스는 오브젝트가 될 수 없음. (이렇게 이해하면 되는건가?)
+
+class가 찍어내는 것이 instance이다. 
+클래스라는 원본 툴로 오브젝트를 찍어내 실체화 하는 것을 인스턴스화라고 한다. 
+즉, 인스턴스는 인스턴스화를 이용해 생성된 오브젝트를 일컫는다. 
+
+유니티로 생각하면 게임 오브젝트를 복제하고 그 복제본을 말하는 것. 
+이렇게 복제된 복제본을 코드 상에서 수정할 수 있도록 변수로 받아 저장하는 것. 
+
+Class -  private static string str = "a"; //static과 private를 연관해서 생각하지 말것. //  static이 들어가면 참조 변수임.  (C#에서는 const로 쓰임. )
+ public과 private는 말그대로  
+ 
+Instance - class의 참조변수를 접근 할 때 dog.str이라고 접근 해야함 
+
+
+Class 와 Instance 부모와 자식 둘이 같다는 건가? 둘의 정의가 모호해진다는 느낌이 드는데 
+
+
+인스턴스에서 Dog dog = new Dog(); 해줄때 dog라는 
+
+instance같은 경우는 찍어져있다가 삭제됨. - > 결국
+그래서 삭제 될 때 가비지 컬렉션에서 인스턴스가 삭제하기 전에 초기화를 해주는 것이 좋음. 
+
+protected override void OnDestroy()를 할 때 
+
+VPSMain에서 OnCloseScreen이 HashTable을 삭제 하는 것이 그 예임.
+
+
+
+확장 메소드 챕터는 overloading이라고 생각하면됨. 
+오버 로딩할때는 같은 메소드에 매개변수가 추가되어 기능이 확장된다는 개념이라고 보면될 듯. 

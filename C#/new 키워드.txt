@@ -1,0 +1,113 @@
+new 로 만든 것들은 직접적으로 생성한다는 뜻. 
+
+
+Test라는 클래스를 만들었다고 가정하자.
+
+​
+
+이 Test라는 놈을 사용하기 위해선
+
+​
+
+​
+
+​
+
+Class A
+{
+    Test T = new Test();이런식으로 생성을 해줘야한다.
+
+    T.aaa = 10;그럼 T클래스 안에있는놈을 쓸수 있다.
+}
+근데 이미 B라는 클래스에서 A 클래스에 만들어놓은 T의 정보를 그대로 받아오고 싶다면.
+
+​
+
+​
+
+​
+
+Class A
+{
+    Test T2 = A.T;이런식으로 접근하면
+
+    Print(T2.aaa);
+    //결과 : 10
+}
+이렇게 쓰면 된다.
+
+​
+
+물론 복사된 값이니 이렇게 자주 써서 좋을 건 없지만 캐싱 해서 쓰는 등의 이유라면 오히려 좋은 선택이다.
+
+​---------------------------------------------------------------------------------------------------------------------
+
+​
+
+​C#에서 파생된 형식에서 기반 형식에 정의된 멤버와 같은 이름의 멤버를
+ new 키워드를 사용하여 캡슐화하면 기반 형식의 멤버는 무효화됩니다. 
+이 때는 사용하는 곳의 형식에 따른 멤버가 사용됩니다. 
+즉, 기반 형식의 변수로 접근하면 기반 형식의 멤버가 사용되고 파생 형식의 변수로 접근하면 파생 형식의 멤버가 사용됩니다.
+
+▶ new 키워드를 이용한 무효화
+
+class Man
+{
+    internal void Work()
+    {
+        Console.WriteLine("일을 하다.");
+    }
+}
+class Student : Man
+{
+    internal new void Work() //new 키워드를 이용하여 Man 형식의 Work메서드 무효화
+    {
+        Console.WriteLine("공부하다.");
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        Student student = new Student();
+        student.Work();
+        Man man = student;
+        man.Work();
+    }
+}
+▶ 실행 결과
+
+공부하다.
+일을 하다.
+그리고 C#에서는 파생 형식에서 무효화 된 기반 클래스의 멤버를 사용할 수 있게 base 키워드를 제공하고 있습니다. 
+만약, 파생 형식에서 base 키워드를 통해 멤버를 호출하면 무효화 된 기반 클래스의 멤버가 사용됩니다.
+
+▶ base 키워드로 무효화 멤버 사용
+
+class Man
+{
+    internal void Work()
+    {
+        Console.WriteLine("일을 하다.");
+    }
+}
+class Student : Man
+{
+    internal new void Work() //new 키워드로 기반 형식 Man의 Work 메서드 무효화
+    {
+        base.Work(); //base 키워드로 무효화 된 Work 메서드 사용
+        Console.WriteLine("공부하다.");
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        Student student = new Student();
+        student.Work();
+    }
+}
+▶ 실행 결과
+
+일을 하다.
+공부하다.

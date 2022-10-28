@@ -1,0 +1,28 @@
+해쉬 테이블과 딕셔너리의 차이점
++두가지 타입이 사용법은 비슷하지만 내부적인 처리와 수용하는 타입의 형태가
+ 다르므로 필요에 따라서 선택을 해야합니다.
+고정적으로 하나의 타입만 입력받을 시에는 딕셔너리를 사용하며, 
+Value에 일정한 형식이 없고 여러 형태를 저장하려면
+해시테이블을 사용해야합니다.
+
+딕셔너리는 언박싱 , 박싱이 일어나지 않는다. 
+
+- 제너릭을 이용한다는게 무슨 말일까? 
+제네릭(generic)이란? 자바에서 제네릭(generic)이란
+ 데이터의 타입(data type)을 일반화한다(generalize)는 것을 의미합니다
+어떤 타입이던지 가지고 올 수 있게 설정해둔다 이런거 같은데 그러면 
+해시테이블이 그런 기능을 하는지 알거같음
+
+
+딕셔너리 
+//생성- 제네릭 기반 02.
+Dictionary<string, HongsClass> dictionary = new Dictionary<string, HongsClass>();
+
+해시테이블 ( Hashtable)
+
+view sourceprint?
+//생성
+Hashtable hashtable = new Hashtable();03. 
+//자료 추가 ( 박싱이 일어남)
+hashtable.Add("Data1", new HongsClass() { Name = "홍진현1", intCount = 1 });
+.hashtable.Add("Data2", new HongsClass() { Name = "홍진현2", intCount = 2 });

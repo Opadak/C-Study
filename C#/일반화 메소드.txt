@@ -1,0 +1,128 @@
+일반화(Generalization) 란? 
+
+데이터 형식(Data Type) 에서 연관성이 있는 2개 이상의 개체 집합을 묶어내는 것.
+데이터 형식이 다른 변수들을 출력한다고 가정하면, 비슷하면서 다른 코드를 중복해서 작성해야 한다. 
+이때 일반화를 사용하여 코드의 중복을 최소화 할 수 있다. 
+
+일반화 구조
+
+
+한정자 반환형식 일반화이름<T> (T 매개변수)
+{
+    코드 1;
+    코드 2;
+    코드 3;
+    ...
+    return 반환값
+}
+
+
+****일반화 메서드(Generalization Method)Permalink
+T를 이용하여 서로 다른 데이터 형식의 메서드를 일반화할 수 있다.
+
+private void general<T>(T value)
+{
+    Console.WriteLine(value);
+}
+
+private void Form1_Load(object sender, EventArgs e)
+{
+    int[] one = { 1, 2, 3 };
+    string two = "일반화";
+    double three = 45.6;
+    bool four = true;
+
+    foreach (int num in one) general<int>(num);
+    general<string>(two);
+    general<double>(three);
+    general<object>(four);
+}
+
+
+
+****일반화 클래스(Generalization Class)Permalink
+T를 이용하여 서로 다른 데이터 형식의 클래스를 일반화할 수 있습니다.
+
+
+
+class general<T>
+{
+    public T[] array;
+    public int size;
+
+    public general(int size)
+    {
+        array = new T[size]; 
+    }
+}
+
+private void Form1_Load(object sender, EventArgs e)
+{
+    general<int> list1 = new general<int>(1); 
+    general<string> list2 = new general<string>(2);
+    general<object> list3 = new general<object>(3);
+
+    list1.array[0] = 1;
+
+    list2.array[0] = "one";
+    list2.array[1] = "two";
+
+    list3.array[0] = 23.456;
+    list3.array[1] = "three";
+    list3.array[2] = true;
+
+    Console.WriteLine(list1.array[0]);
+
+    Console.WriteLine(list2.array[0]);
+    Console.WriteLine(list2.array[1]);
+
+    Console.WriteLine(list3.array[0]);
+    Console.WriteLine(list3.array[1]);
+    Console.WriteLine(list3.array[2]);
+}
+
+
+***제약조건 where : T
+모든 형식에 대하여 대응할 수 있지만, 특정 조건에만 만족하는 경우에만 사용 할 수 있게 제한할 수 있습니다.
+
+where 형식매개변수 : 제약조건
+where T : struct : T는 값 형식으로 제한
+where T : class : T는 참조 형식으로 제한
+where T : new() : 매개 변수가 없는 생성자로 제한
+where T : 기반 클래스 이름 : 기반 클래스의 파생 클래스로 제한
+where T : 인터페이스 이름 : 명시한 인터페이스로 제한
+where T : U : 다른 형식 매개 변수 U로부터 상속받은 클래스로 제한 (매개변수 U로부터 상속받은 클래스라는게 뭐징)
+
+
+
+private void general<T>(T value) where T : struct
+{
+    Console.WriteLine(value);
+}
+
+private void Form1_Load(object sender, EventArgs e)
+{
+    int[] one = { 1, 2, 3 };
+    string two = "일반화";
+    double three = 45.6;
+    bool four = true;
+
+    foreach (int num in one) general<int>(num);
+    //general<string>(two);
+    general<double>(three);
+    //general<object>(four);
+}
+
+
+모든 형식에 대하여 대응할 수 있지만, 특정 조건에만 만족하는 경우에만 사용할 수 있도록 제한을 뒀다고 했는데, 
+위에 있는 제약조건을 가진 일반화 메소드의 제약조건은 struck인 즉, struct 값 형식으로 제한
+
+
+근데 값형식과 참조형식은 어떤식으로 구분할 수 있을까? 
+
+
+
+
+
+
+

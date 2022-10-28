@@ -1,0 +1,117 @@
+부모
+ 
+    public class parent
+    {
+        protected virtual void foo()
+        {
+ 
+        }
+    }
+Colored by Color Scripter
+cs
+ 
+
+
+
+
+
+
+
+자식
+    public class child : parent
+    {
+        protected override void foo()
+        {
+            base.foo(); //base는 Java의 super와 비슷한 키워드 인것 같다. '부모'를 뜻함.
+        }
+    }
+Colored by Color Scripter
+cs
+
+
+
+
+C++11에 추가된 override 키워드의 출처가 이게 아닐까 생각한다.
+
+
+
+C++에서 사용되는 override 키워드는, 구버전 언어의 호환성을 위해서 써도 그만 안써도 그만인 키워드이지만
+
+이런 C++ 특유 자유로운 문법을 혐오하고 부정하는 C#답게, "나 가상함수 오버라이드해요" 라고 명시적으로 선언하게 끔 
+컴파일러단에서 경고를 해준다.
+
+
+
+만약 C#에서 가상함수 오버라이드시에, override 키워드를 쓰지 않으면 컴파일러가 경고를 띄운다.
+
+"오버라이드 할거면 override 붙이고, 안할거면 new를 붙이세요"
+
+
+
+
+
+
+
+new를 붙이면 자식의 함수를 숨긴다.
+
+
+public class parent
+{
+    public virtual void foo()
+    {
+        Console.WriteLine("parnet func");
+    }
+}
+ 
+public class child : parent
+{
+    public new void foo()    //new 키워드를 붙였다.
+    {
+        Console.WriteLine("child func");
+    }
+}
+ 
+class Program
+{
+    static void Main(string[] args)
+    {
+        child  memchild         = new child();
+        parent memparet         = new parent();
+        parent memChildofParent = new child();
+ 
+        memchild.foo();
+        memparet.foo();
+        memChildofParent.foo(); //부모의 자료형으로 만들어진 자식 메모리에선, 자식의 가상 함수가 숨겨진다.
+    }
+}
+Colored by Color Scripter
+cs
+
+
+
+
+결과 : override 키워드로 가상함수를 구현했다면, 세번째 라인 출력은 "child func"가 나왔겠지만, 
+
+부모 자료형으로 만들어진 memChildofParent는 child 메모리를 받았음에도 자료형이 parent 이기에 func를 띄운다. 
+
+
+
+ 
+
+
+
+
+
+내 생각에, 가상함수의 new키워드는 C++에서 C#으로 넘어온 개발자가 사용하기엔 좋은 키워드는 아닌 것 같다.
+
+
+
+프로젝트에서 사용되는 자식 클래스의 일반적인 가상함수는, 부모의 기능을 포함하는 동작을 수행하고 싶을때 사용하는 것이
+ 대부분이고
+
+(이건 거의 관례같은 것이라서, 심지어 C#에서는 override 키워드를 입력해서 가상함수를 만들면,
+ 부모 가상함수를 호출하는 코드를 IDE가 자동완성으로 만들어준다.)
+
+부모의 가상함수만 호출해야 하는 경우라면 차라리 그냥 이름을 다른걸 주는게 낫기 때문이다.
+
+애초에 가상함수를 사용하는데 부모것만 부르려고 사용하는 경우가 없기에.
