@@ -1,0 +1,6 @@
+<T>는 제네릭 클래스 맴버 변수의 데이터 유형을 표시하는 기호이다. 
+일반적으로 Type의 약자인 T로 작성하며, 키워드를 입력하는 경우 에러가 발생한다. 
+
+GenericClass<int> genericObj = new GenericClass<int>();
+위 코드에서 genericObj 객체를 생성할 때, <>안에 int를 입력했으므로 objMember맴버 변수는 int형으로 치환된다. 
+

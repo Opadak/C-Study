@@ -1,0 +1,12 @@
+ public static GameManager Inst { get; set; }
+ void Awake() => Inst = this;
+
+
+
+static이라는 것이 
+변수 혹은 클래스가 객체 단위가 아니라 클래스 단위로 생성, 사용되게 하는 키워드 이다. 
+msdn의 설명에 따르면 static한정자는 특정 개체가 아니라 해당 형식 자체가 속하는 
+정적 멤버를 선언하는데 사용된다 라고 한다. 
+
+무슨 의미냐면,,,
+

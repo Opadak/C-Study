@@ -1,0 +1,92 @@
+Internal라는 키워드는 형식 멤버에 대한 액세스 한정자입니다.
+ 
+이제 이것을 설명하기 전에 앞서 설명에 필요한 단어들을 정리 해보겟습니다.
+ 
+1. 모듈(Module)
+컴퓨터 용어에서 모듈은 "컴파일이 완료된 바이너리"를 말하는 것이며,
+이것을 다르게 말하면 라이브러리를 말하는 것입니다.
+이 라이브러리는 여러 가지의 타입 및 함수들을 모아둔 집합을 말합니다.
+ 
+2. 어셈블리(Assembly)
+어셈블리란 .NET 기반 애플리케이션에 대한 배포, 버전 제어, 재사용 등 프로그램의 기본 단위입니다.
+예로는 실행 파일(.exe) 또는 동적 연결 라이브러리(.dll)파일과 같은 .NET 애플리케이션의 구성 요소라고 보시면 됩니다.
+.Net에서는 소스 코드 파일 1개 이상에서 어셈블리를 빌드 할 수 있으며,
+.Net FrameWork에서 어셈블리 모듈을 하나 이상 포함할 수 있다고합니다.
+그렇기에 대규모 프로젝트를 계획하여 여러 개발자가 작업하는 별도의 소스 파일이나 모듈을 결합하여
+단일 어셈블리를 만들 수 있으며 라이브러리처럼 병합할 수 있다고 보시면 됩니다.
+이 어셈블리는 필요한 경우에만 메모리에 로드되며, 사용되지 않는 경우에는 로드되지 않습니다.
+즉, 어셈블리는 대규모 프로젝트에서 리소스를 관리하는 효율적인 방법일 수 있습니다.
+ 
+2-1. 어셈블리 정리
+빌드시 생성되는 dll과 .exe파일이라고 보면되며,
+여러 어셈블리를 상황에 맞게 파일을 병합을 하여 리소스 관리를 할 수있는 프로그램의 기본 단위라고 정의할 수 있습니다.
+이제 기본 용어정리는 끝났고 이 글의 주제인 Internal에 대해 정리를 해보겠습니다.
+ 
+보통 우리는 클래스의 멤버 접근 권한을 제어하기 위해 public, protected, private 이렇게 세가지를 많이들 쓰는데요, 
+평소 사용이 드문 Internal이라는 접근제어자가 하나 더 있습니다.
+Internal은 다른 접근제어자와 달리 Internal의 접근 권한을 가진 멤버는 어셈블리 코드에서만 사용할 수 있다고합니다.
+사용방법은 다른 제어자와 똑같습니다.
+ 
+예제1)
+//internalClass1.cs 파일
+
+using System;
+
+class InternalClass{
+	internal static void Print(){
+    	console.write("TEST");
+    }
+}
+
+class MainClass{
+	public static void Main(){
+    	InternalClass.Print();
+    }
+}
+
+//결과 : "TEST" 출력
+ 
+//internalClass2.cs 파일
+
+using System;
+
+class InternalClass2{
+	public static void Main(){
+    	InternalClass.Print();
+    }
+}
+
+//에러 발생 : 보호수준 때문에 'InternalClass.Print()'에 엑세스 할 수 없습니다..
+위의 예제로 보시면 InternalClass2의 클래스에서 InternalClass의 Print함수를 호출 시 에러가 떨어지는 것을 볼 수 있습니다. 
+이유는 외부의 클래스에서 internal로 선언된 클래스를 접근할 수 없기 때문입니다. 
+만약 사용을 하고 싶을 경우에는 아래의 방법이 있습니다.
+ 
+예제2)
+//internalClass3.cs 파일
+
+using System;
+
+class InternalClass3{
+	protected internal static void Print(){
+    	console.write("TEST");
+    }
+}
+ 
+//internalClass4.cs 파일
+
+using System;
+
+class InternalClass4{
+	public static void Main(){
+    	internalClass3.Print();
+    }
+}
+
+//결과 : "TEST" 출력
+이런 식으로 protected internal 접근자를 사용하여 접근을 허용 할 수 있습니다. 해당 접근자는 어셈블리안에 있는
+클래스(internal)와 파생된 클래스(protected)의 접근을 허용하는 것입니다.
+ 
+이렇듯 해당 멤버에 대한 "정보은닉"을 원한다면 상황에 맞게 외부에 노출 하고싶지않은 메소드, 상속관계, 어셈블리 관계 등을 
+잘 생각하여 접근제어자를 활용해야됩니다.
+출처: https://jeongkyun-it.tistory.com/24 [나의 과거일지:티스토리]
+

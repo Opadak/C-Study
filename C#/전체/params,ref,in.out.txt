@@ -1,0 +1,16 @@
+params
+이 매개 변수가 가변 개수의 인수를 사용할 수 있음을 지정
+in
+이 매개 변수가 참조로 전달할 수 있지만 호출된 메서드로만 읽을 수 있음을 지정
+ref 
+이 매개 변수를 참조로 전달할 수 있고 호출된 메소드로 읽거나 쓸 수 있음을 지정
+out
+이 매개 변수가 참조로 전달되고 호출된 메서드에 의해 기록되도록 지정. 
+ 
+
+foreach(var occItem in mapProperty.occultionMeshObjects)
+{
+이렇게 되어 있는 foreach문은 모든 mapProperty.occultionMeshObjects를 
+읽는다. 
+}
+

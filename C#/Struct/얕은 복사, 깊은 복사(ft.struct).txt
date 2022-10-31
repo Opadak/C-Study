@@ -1,0 +1,63 @@
+얕은 복사란 복사본의 값을 바꾸엇을 때 원본의 값도 바뀌는 형태이다. 
+반면 깊은 복사란 복사본의 값을 바꾸어도 원본의 값은 바뀌지 않은 형태이다. 
+
+클래스에서 얕은 복사, 
+구조체에서 깊은 복사가 사용된다. 
+
+클래스와 구조체는 비슷한 부분이 많다. 
+구조체는 클래스와 동일한 구조로 사용할 수 있으며, 비교적 크기가 작으며 간단하다. 
+상속이 필요없는 경우 클래스를 사용한다. 
+
+
+특징		클래스			구조체
+선언		class			struct
+형식		참조 형식		값 형식
+복사		얕은 복사		깊은 복사
+인스턴스 생성	new연산자, 생성자 필요	매개 변수가 없는 생성자 선언 불가
+
+
+
+#얕은 복사 
+
+class test_class
+{
+    public int first;
+    public int second;
+}
+
+private void Form1_Load(object sender, EventArgs e)
+{
+    test_class original = new test_class();
+
+    original.first = 10;
+    original.second = 20;
+
+    test_class copy = original;
+    copy.first = 30;
+
+    Console.WriteLine("{0}, {1}, {2}, {3}", original.first, original.second, copy.first, copy.second);
+}
+
+
+
+#깊은 복사 
+
+struct test_struct
+{
+    public int first;
+    public int second;
+}
+
+private void Form1_Load(object sender, EventArgs e)
+{
+    test_struct original;
+
+    original.first = 10;
+    original.second = 20;
+
+    test_struct copy = original;
+    copy.first = 30;
+
+    Console.WriteLine("{0}, {1}, {2}, {3}", original.first, original.second, copy.first, copy.second);
+}
+

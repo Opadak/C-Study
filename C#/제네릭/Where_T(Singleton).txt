@@ -1,0 +1,82 @@
+
+
+public class MySingleton2<T> : MonoBehaviour where T : MonoBehaviour
+MonoBehaiour을 상속받는 것들로 제약을 건 MonoBehavior를 상속받는 Singleton이다. 
+
+
+
+------------------------------------------------------------------------------------
+프로그래밍을 하다보면 가장 많이 쓰이는 것이 아마 싱글톤 패턴 일 것이다.
+ 싱글톤을 만드는 방법은 다양한데, 클래스마다 그것을 구현 해 주기는 귀찮다. 
+Java같은 경우 Enum타입으로 만들면 싱클톤이 되어서 편한데, c#같은 경우에는 그런 방법이 되지 않는다. 
+그나마 편하게 싱글톤 클래스를 만들고 사용하기 위한 방법은 제네릭을 이용하는 것이다.
+ 
+
+아래의 코드를 사용하는 이유는 여러가지를 고려하기 위해서 인데, 
+1. 동기화에 대한 예외처리 
+2. 클래스만 있고 씬에서 해당 클래스 오브젝트가 없을 때의 예외처리
+3. DonDonDestroyOnLoad로 인해 씬이 재시작 되면 생기는 2개의 오브젝트 문제 
+4. 비대해진 코드를 압축하는 방법
+을 고려해서 제네릿으로 구현하는 방법이 있다. 
+
+
+public class MySingleton2<T> : MonoBehaviour where T : MonoBehaviour
+{
+    // Check to see if we're about to be destroyed
+    private static bool m_ShuttingDown = false;
+    private static object m_Lock = new object();
+    private static T m_Instance;
+ 
+    /// <summary>
+    /// Access singleton instance through this propriety.
+    /// </summary>
+    public static T Instance
+    {
+        get
+        {
+            if (m_ShuttingDown)
+            {
+                Debug.LogWarning("[Singleton] Instance '" + typeof(T) +
+                    "' already destroyed. Returning null.");
+                return null;
+            }
+ 
+            lock (m_Lock)
+            {
+                if (m_Instance == null)
+                {
+                    // Search for existing instance.
+                    m_Instance = (T)FindObjectOfType(typeof(T));
+ 
+                    // Create new instance if one doesn't already exist.
+                    if (m_Instance == null)
+                    {
+                        // Need to create a new GameObject to attach the singleton to.
+                        var singletonObject = new GameObject();
+                        m_Instance = singletonObject.AddComponent<T>();
+                        singletonObject.name = typeof(T).ToString() + " (Singleton)";
+ 
+                        // Make instance persistent.
+                        DontDestroyOnLoad(singletonObject);
+                    }
+                }
+ 
+                return m_Instance;
+            }
+        }
+    }
+ 
+    private void OnApplicationQuit()
+    {
+        m_ShuttingDown = true;
+    }
+ 
+ 
+    private void OnDestroy()
+    {
+        m_ShuttingDown = true;
+    }
+}
+
+----------------------------------------------------------------------------------
+
